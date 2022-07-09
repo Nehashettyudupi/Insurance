@@ -1,0 +1,15 @@
+{
+  "name": "insurance_company",
+  "version": "1.0.0",
+  "description": "Case Study for Insurance Company",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Neha K Shetty",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.1",
+    "react-router-dom": "^6.3.0"
+  }
+}
