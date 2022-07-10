@@ -53,4 +53,21 @@ router.post('/saveInsuranceDetails', async function saveInsuranceDetails(req,res
     }
 });
 
+router.post('/getGraphData', async function getGraphData(req,res){
+    try{
+        // let query = 'SELECT year(dateOfPurchase) as year,MONTHNAME(dateOfPurchase) as month,month(dateOfPurchase) as month_no, COUNT(policyId) as count FROM insurance group by year(dateOfPurchase),MONTHNAME(dateOfPurchase) ';
+        let query = 'SELECT year(dateOfPurchase) as year,MONTHNAME(dateOfPurchase) as month,month(dateOfPurchase) as month_no, COUNT(policyId) as count FROM insurance INNER JOIN customers ON customers.customerRegion = :region group by year(dateOfPurchase),MONTHNAME(dateOfPurchase) ';
+        
+        let result = await sequelize.query(query, {
+            replacements: {region: req.body.region},
+            raw: true,
+          });
+        //   console.log(result[0]);
+        return res.send(JSON.stringify({data: result[0]}))}
+    catch(error){
+        console.log(error);
+        return res.sendStatus(403);
+    }
+});
+
 module.exports = router;

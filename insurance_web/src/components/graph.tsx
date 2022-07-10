@@ -63,15 +63,21 @@ const options = {
     'December',
   ];
 export const Graph = () => {
-    const [region, setRegion] = React.useState([]);
+    const [region, setRegion] = React.useState('north');
     const [data, setData] = React.useState<any>({});
     const [final, setFinal] = React.useState([]);
+
+    const onSearch = (event: any) => {
+      console.log(event.target.value);
+      setRegion(event.target.value);
+    }
     useEffect(() => {
         const requestOptions = {
-            method: 'GET',
+            method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
+            body: JSON.stringify({'region': region}),
           };
         async function fetchData() {
             const response = await fetch(
@@ -93,9 +99,6 @@ export const Graph = () => {
               })
             }
             setFinal(dataArray);
-            // responseJson.data.forEach((item: any) =>{
-            //   console.log(item);
-            // })
             setData({
               monthLabels,
               datasets: [
@@ -110,8 +113,18 @@ export const Graph = () => {
             console.log(data);
         }
         fetchData();
-      }, []);
-    return <div>{<Line data={{
+      }, [region]);
+    return <div>
+      {/* <div><input type="text" placeholder = {'Search Insurance'} onChange={(text) => onSearch(text)}/> */}
+      <div >
+        <select name="cars" id="cars" onChange={(text) => onSearch(text)}>
+          <option value="North">North</option>
+          <option value="South">South</option>
+          <option value="East">East</option>
+          <option value="West">West</option>
+        </select>
+      </div>
+      {<Line data={{
       labels: monthLabels,
       datasets: [
         {
@@ -123,22 +136,3 @@ export const Graph = () => {
       ],
     }} />}</div>
 }
-// datasets: [
-//   {
-//     label: `${selectedGraph.label}`,
-//     data: accountData,
-//     borderColor: colors.darkBlue,
-//     backgroundColor: colors.black,
-//   },
-// ],
-{/* <Line options={options} data={data} /> */}
-
-{/* <Line data={{
-      labels: ['Jun', 'Jul', 'Aug'],
-      datasets: [
-        {
-          label: '',
-          data: [5, 6, 7],
-        },
-      ],
-    }} /> */}
