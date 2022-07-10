@@ -21,10 +21,6 @@ const insurance = sequelize.define(
       allowNull: false,
       type: DataTypes.DATE,
     },
-    enabled: {
-      type: DataTypes.STRING(32),
-      allowNull: false,
-    },
     premium: {
       type: DataTypes.INTEGER(32),
       allowNull: false,
