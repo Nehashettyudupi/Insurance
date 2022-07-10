@@ -95,8 +95,9 @@ export const Insurance = () => {
             const newData = arrayHolder.filter((x:any) => {
                 if(x.policyId){
                     console.log('neha', x.policyId, text);
-                    const mainString = x.policyId.toString();
-                    return mainString.indexOf(text.toString()) > -1;
+                    const mainpolicyId= x.policyId.toString();
+                    const mainCustomerId= x.customerId.toString();
+                    return mainpolicyId.indexOf(text.toString()) > -1 || mainCustomerId.indexOf(text.toString()) > -1 ;
                 }
                 return false
             });
