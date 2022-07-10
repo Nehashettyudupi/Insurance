@@ -3,8 +3,43 @@ const END_POINTS = 'http://localhost:8080/insurance/getInsuranceList'
 
 export const Insurance = () => {
     const [insuranceList, setInsuranceList] = React.useState([]);
+    const [originalInsuranceList, setOriginalInsuranceList] = React.useState([]);
     const onSearch = (e:any) => {
-        return e;
+        // setSearch(value);
+        const text = parseInt(e.target.value);
+        
+        const arrayHolder = originalInsuranceList;
+        if(e.target.value.length > 0){
+            const newData = arrayHolder.filter((x:any) => {
+                if(x.policyId){
+                    console.log('neha', x.policyId, text);
+                    const mainString = x.policyId.toString();
+                    return mainString.indexOf(text.toString()) > -1;
+                }
+                return false
+            });
+            setInsuranceList(newData);
+        }else{
+            setInsuranceList(arrayHolder);
+        }
+        // const newData = arrayHolder.filter((x:any) => {
+        //     if(x.policyId){
+        //         return x.policyId === text
+        //     }
+        //     return false
+        // });
+        // console.log('new data---------', newData, typeof text);
+        // const newData = arrayHolder.filter((item: any) => {
+        //   if (item.policyId) {
+        //     console.log('item------', item.policyId);
+        //     // const itemData = `${item.policyId}`;
+        //     // const textData = text;
+        //     const itemData = `${item.policyId?.toString()}`;
+        //     const textData = text.toString();
+        //     return itemData.indexOf(textData) > -1;
+        //   }
+        //   return false;
+        // });
     }
     const searchView = () => {
         return <div style={{float: "right", padding: 10}}><input type="text" placeholder = {'Search Insurance'} onChange={(text) => onSearch(text)}/></div>
@@ -12,35 +47,35 @@ export const Insurance = () => {
     const tableView = () => {
         return <div>
         <table className="table table-bordered table-dark">
-            <thead> 
-                <tr>
-                    <th>Policy Id</th>
-                    <th>Customer Id</th>
+            <thead key={'thead'}> 
+                <tr key={'header'}>
+                    <th key= {'policyId'}>Policy Id</th>
+                    <th key= {'customerId'}>Customer Id</th>
                     {/* <th>Fuel Id</th> */}
-                    <th>Date Of Purchase</th>
-                    <th>Premium</th>
+                    <th key= {'dop'}>Date Of Purchase</th>
+                    <th key= {'premium'}>Premium</th>
                     {/* <th>Bodily Injury Liability</th> */}
                     {/* <th>Personal Injury Protection</th> */}
                     {/* <th>Property Damage Liability</th> */}
                     {/* <th>Collision</th> */}
                     {/* <th>Comprehensive</th> */}
-                    <th>Customer Gender</th>
+                    <th key={'gender'}>Customer Gender</th>
                     {/* <th>Customer Income Group</th> */}
-                    <th>Customer Region</th>
+                    <th key={'region'}>Customer Region</th>
                     {/* <th>Customer Marital Status</th> */}
-                    <th>Edit</th>
+                    <th key= {'edit'}>Edit</th>
                 </tr>
             </thead>
             <tbody>
                 {/* {insuranceList.length > 0  && insuranceList.map((item)=> console.log(item))} */}
-                {insuranceList.length > 0  && insuranceList.map((item:any, key: Number)=>{ return <tr>
-                    <td>{item.policyId}</td>
-                    <td>{item.customerId}</td>
-                    <td>{item.dateOfPurchase}</td>
-                    <td>{item.premium}</td>
-                    <td>{item.customerGender}</td>
-                    <td>{item.customerRegion}</td>
-                    <td><button>Edit</button></td>
+                {insuranceList.length > 0  && insuranceList.map((item:any, key: Number)=>{ return <tr key ={'row' + key}>
+                    <td key={'policyId'+ key}>{item.policyId}</td>
+                    <td key={'customerId'+ key}>{item.customerId}</td>
+                    <td key={'dateOfPurchase'+ key}>{item.dateOfPurchase}</td>
+                    <td key={'premium'+ key}>{item.premium}</td>
+                    <td key={'customerGender'+ key}>{item.customerGender}</td>
+                    <td key={'customerRegion'+ key}>{item.customerRegion}</td>
+                    <td key={'edit'+ key}><button>Edit</button></td>
                 </tr>})}
                 
             </tbody>
@@ -63,6 +98,7 @@ export const Insurance = () => {
           )
             const responseJson = await response.json();
             setInsuranceList(responseJson.data);
+            setOriginalInsuranceList(responseJson.data);
           console.log(responseJson);
         //   const response = await fetch(
         //     END_POINTS,
