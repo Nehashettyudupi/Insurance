@@ -13,8 +13,11 @@ export const Insurance = () => {
         setModal(true);
         setSelectedInsurance(id);
     }
+    const saveInsurance = (data: any) => {
+      console.log(data);
+    }
     const dialogComponent = () => {
-      return <div style={{width: '250px', paddingLeft: '30%', paddingRight: '30%', height: '400px', position: 'fixed', zIndex: 10, overflowY: 'scroll'}}><Modal.Dialog>
+      return <div style={{paddingLeft: '30%', paddingRight: '30%', backgroundColor:'grey'}}><div style={{width: '450px', height: '400px', position: 'fixed', zIndex: 10, overflowY: 'scroll'}}><Modal.Dialog>
       <Modal.Header>
           <Modal.Title>
           Edit Insurance Policy Details
@@ -22,28 +25,34 @@ export const Insurance = () => {
       </Modal.Header>
       <Modal.Body>
       <Form>
-        <Form.Group className="mb-3" controlId="formBasicPolicyId">
-          <Form.Label><b>Policy Id :</b> {selectedInsurance['policyId']}</Form.Label> &nbsp;&nbsp;
-          <Form.Label><b>Customer Id :</b> {selectedInsurance['customerId']} </Form.Label>&nbsp;&nbsp;
-          <Form.Label><b>Fuel Id :</b> {selectedInsurance['fuelId']} </Form.Label>&nbsp;&nbsp;
+        <Form.Group className="mb-1" controlId="formBasicPolicyId">
+          <Form.Label><b>Policy Id :</b> {selectedInsurance['policyId']}</Form.Label> 
+          </Form.Group>
+          <Form.Group className="mb-1">
+          <Form.Label><b>Customer Id :</b> {selectedInsurance['customerId']} </Form.Label>
+          </Form.Group>
+          <Form.Group className="mb-1">
+          <Form.Label><b>Fuel Id :</b> {selectedInsurance['fuelId']} </Form.Label>
+          </Form.Group>
+          <Form.Group className="mb-1">
           <Form.Label><b>Form Label:</b> {selectedInsurance['dateOfPurchase']}</Form.Label>&nbsp;&nbsp;
           {/* <Form.Control type="text" placeholder="PolicyId " value={selectedInsurance['policyId']}/> */}
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPremium">
         <Form.Label>{'Custom Gender'}</Form.Label>
-        <Form.Control type="text" placeholder="gender " value={selectedInsurance['customerGender']}/>
+        <Form.Control type="text" placeholder="gender " defaultValue={selectedInsurance['customerGender']}/>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPremium">
         <Form.Label>{'Custom Income Group'}</Form.Label>
-        <Form.Control type="text" placeholder="income " value={selectedInsurance['customerIncomeGroup']}/>
+        <Form.Control type="text" placeholder="income " defaultValue={selectedInsurance['customerIncomeGroup']}/>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPremium">
         <Form.Label>{'Custom Region'}</Form.Label>
-        <Form.Control type="text" placeholder="income " value={selectedInsurance['customerRegion']}/>
+        <Form.Control type="text" placeholder="income " defaultValue={selectedInsurance['customerRegion']}/>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPremium">
         <Form.Label>{'Custom Marital Status'}</Form.Label>
-        <Form.Control type="text" placeholder="income " value={selectedInsurance['customerMaritalStatus']}/>
+        <Form.Control type="text" placeholder="income "  defaultValue={selectedInsurance['customerMaritalStatus']}/>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPremium">
         <Form.Check type="checkbox" label={'Bodily Injury Liability'}/>
@@ -60,10 +69,14 @@ export const Insurance = () => {
         <Form.Group className="mb-3" controlId="formBasicPremium">
         <Form.Check type="checkbox" label={'Comprehensive'}/>
         </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPremium">
+        <Form.Label>{'Premium'}</Form.Label>
+        <Form.Control type="text" placeholder="premium" onChange={(e)=>selectedInsurance['premium'] = parseInt(e.target.value)} defaultValue={selectedInsurance['premium']}/>
+        </Form.Group>
       </Form>
       </Modal.Body>
       <Modal.Footer>
-          <Button variant="primary">
+          <Button variant="primary" onClick={()=> saveInsurance(selectedInsurance)}>
           Save changes
           </Button>
           <Button variant="secondary" onClick={()=> setModal(false)}>
@@ -71,59 +84,8 @@ export const Insurance = () => {
           </Button>
       </Modal.Footer>
       </Modal.Dialog>
-        {/* <div><button style={{position: 'fixed',right:0,bottom:0}}>Save</button></div> */}
       </div>
-//         return <div style={{maxHeight: '250vh', position: 'fixed', zIndex: 10, display:'flex', paddingLeft: '30%', paddingRight: '30%', overflowY: 'scroll'}}>
-//           <Modal.Dialog>
-//             <Modal.Header closeButton>
-//               <Modal.Title>
-//               Edit Insurance Policy Details
-//               </Modal.Title>
-//             </Modal.Header>
-//           <Modal.Body>
-//           <Form>
-//   <Form.Group className="mb-3" controlId="formBasicPolicyId">
-//     <Form.Label><b>Policy Id :</b> {selectedInsurance['policyId']}</Form.Label> &nbsp;&nbsp;
-//     <Form.Label><b>Customer Id :</b> {selectedInsurance['customerId']} </Form.Label>&nbsp;&nbsp;
-//     <Form.Label><b>Fuel Id :</b> {selectedInsurance['fuelId']} </Form.Label>&nbsp;&nbsp;
-//     <Form.Label><b>Form Label:</b> {selectedInsurance['dateOfPurchase']}</Form.Label>&nbsp;&nbsp;
-//     {/* <Form.Control type="text" placeholder="PolicyId " value={selectedInsurance['policyId']}/> */}
-//   </Form.Group>
-//   <Form.Group className="mb-3" controlId="formBasicPremium">
-//   <Form.Label>{'Custom Gender'}</Form.Label>
-//   <Form.Control type="text" placeholder="gender " value={selectedInsurance['customerGender']}/>
-//   </Form.Group>
-//   <Form.Group className="mb-3" controlId="formBasicPremium">
-//   <Form.Label>{'Custom Income Group'}</Form.Label>
-//   <Form.Control type="text" placeholder="income " value={selectedInsurance['customerIncomeGroup']}/>
-//   </Form.Group>
-//   <Form.Group className="mb-3" controlId="formBasicPremium">
-//   <Form.Check type="checkbox" label={'Bodily Injury Liability'}/>
-//   </Form.Group>
-//   <Form.Group className="mb-3" controlId="formBasicPremium">
-//   <Form.Check type="checkbox" label={'Personal Injury Protection'}/>
-//   </Form.Group>
-//   <Form.Group className="mb-3" controlId="formBasicPremium">
-//   <Form.Check type="checkbox" label={'Property Damage Liability'}/>
-//   </Form.Group>
-//   <Form.Group className="mb-3" controlId="formBasicPremium">
-//   <Form.Check type="checkbox" label={'Collision'}/>
-//   </Form.Group>
-//   <Form.Group className="mb-3" controlId="formBasicPremium">
-//   <Form.Check type="checkbox" label={'Comprehensive'}/>
-//   </Form.Group>
-// </Form>
-//           </Modal.Body>
-//           <Modal.Footer>
-//             <Button variant="primary">
-//             Save changes
-//             </Button>
-//             <Button variant="secondary" onClick={()=> setModal(false)}>
-//             Close
-//             </Button>
-//           </Modal.Footer>
-//         </Modal.Dialog>
-//         </div>
+</div>
     }
     const onSearch = (e:any) => {
       const text = parseInt(e.target.value);
