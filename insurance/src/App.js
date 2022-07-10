@@ -11,7 +11,7 @@ import {
 const App = ()=> {
   return (
     <BrowserRouter>
-      <div className="container mt-2" style={{ marginTop: 40 }}>
+      <div style={{'marginTop': '10px'}}>
         <Routes>
           <Route exact path="/"  element={<Insurance/>} />
         </Routes>
