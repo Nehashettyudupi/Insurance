@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { Insurance } from './components/insurance';
+import { Graph } from './components/graph';
 import {
   BrowserRouter,
   Routes,
@@ -14,7 +15,7 @@ const App = ()=> {
       <div style={{'marginTop': '10px', padding: '20px'}}>
         <Routes>
           <Route path="/"  element={<Insurance/>} />
-          {/* <Route path="/editInsurance"  element={<EditInsurance/>} /> */}
+          <Route path="/graph"  element={<Graph/>} />
         </Routes>
       </div>
     </BrowserRouter>
