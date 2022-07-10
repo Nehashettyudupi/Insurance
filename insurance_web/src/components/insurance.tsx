@@ -1,12 +1,132 @@
 import React ,{useEffect} from "react";
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 const END_POINTS = 'http://localhost:8080/insurance/getInsuranceList'
 
 export const Insurance = () => {
     const [insuranceList, setInsuranceList] = React.useState([]);
+    const [model, setModal] = React.useState(false);
     const [originalInsuranceList, setOriginalInsuranceList] = React.useState([]);
+    const [selectedInsurance, setSelectedInsurance]= React.useState<any>([]);
+    const editInsurance = (id: any) => {
+        setModal(true);
+        setSelectedInsurance(id);
+    }
+    const dialogComponent = () => {
+      return <div style={{width: '250px', paddingLeft: '30%', paddingRight: '30%', height: '400px', position: 'fixed', zIndex: 10, overflowY: 'scroll'}}><Modal.Dialog>
+      <Modal.Header>
+          <Modal.Title>
+          Edit Insurance Policy Details
+          </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      <Form>
+        <Form.Group className="mb-3" controlId="formBasicPolicyId">
+          <Form.Label><b>Policy Id :</b> {selectedInsurance['policyId']}</Form.Label> &nbsp;&nbsp;
+          <Form.Label><b>Customer Id :</b> {selectedInsurance['customerId']} </Form.Label>&nbsp;&nbsp;
+          <Form.Label><b>Fuel Id :</b> {selectedInsurance['fuelId']} </Form.Label>&nbsp;&nbsp;
+          <Form.Label><b>Form Label:</b> {selectedInsurance['dateOfPurchase']}</Form.Label>&nbsp;&nbsp;
+          {/* <Form.Control type="text" placeholder="PolicyId " value={selectedInsurance['policyId']}/> */}
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPremium">
+        <Form.Label>{'Custom Gender'}</Form.Label>
+        <Form.Control type="text" placeholder="gender " value={selectedInsurance['customerGender']}/>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPremium">
+        <Form.Label>{'Custom Income Group'}</Form.Label>
+        <Form.Control type="text" placeholder="income " value={selectedInsurance['customerIncomeGroup']}/>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPremium">
+        <Form.Label>{'Custom Region'}</Form.Label>
+        <Form.Control type="text" placeholder="income " value={selectedInsurance['customerRegion']}/>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPremium">
+        <Form.Label>{'Custom Marital Status'}</Form.Label>
+        <Form.Control type="text" placeholder="income " value={selectedInsurance['customerMaritalStatus']}/>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPremium">
+        <Form.Check type="checkbox" label={'Bodily Injury Liability'}/>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPremium">
+        <Form.Check type="checkbox" label={'Personal Injury Protection'}/>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPremium">
+        <Form.Check type="checkbox" label={'Property Damage Liability'}/>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPremium">
+        <Form.Check type="checkbox" label={'Collision'}/>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPremium">
+        <Form.Check type="checkbox" label={'Comprehensive'}/>
+        </Form.Group>
+      </Form>
+      </Modal.Body>
+      <Modal.Footer>
+          <Button variant="primary">
+          Save changes
+          </Button>
+          <Button variant="secondary" onClick={()=> setModal(false)}>
+          Close
+          </Button>
+      </Modal.Footer>
+      </Modal.Dialog>
+        {/* <div><button style={{position: 'fixed',right:0,bottom:0}}>Save</button></div> */}
+      </div>
+//         return <div style={{maxHeight: '250vh', position: 'fixed', zIndex: 10, display:'flex', paddingLeft: '30%', paddingRight: '30%', overflowY: 'scroll'}}>
+//           <Modal.Dialog>
+//             <Modal.Header closeButton>
+//               <Modal.Title>
+//               Edit Insurance Policy Details
+//               </Modal.Title>
+//             </Modal.Header>
+//           <Modal.Body>
+//           <Form>
+//   <Form.Group className="mb-3" controlId="formBasicPolicyId">
+//     <Form.Label><b>Policy Id :</b> {selectedInsurance['policyId']}</Form.Label> &nbsp;&nbsp;
+//     <Form.Label><b>Customer Id :</b> {selectedInsurance['customerId']} </Form.Label>&nbsp;&nbsp;
+//     <Form.Label><b>Fuel Id :</b> {selectedInsurance['fuelId']} </Form.Label>&nbsp;&nbsp;
+//     <Form.Label><b>Form Label:</b> {selectedInsurance['dateOfPurchase']}</Form.Label>&nbsp;&nbsp;
+//     {/* <Form.Control type="text" placeholder="PolicyId " value={selectedInsurance['policyId']}/> */}
+//   </Form.Group>
+//   <Form.Group className="mb-3" controlId="formBasicPremium">
+//   <Form.Label>{'Custom Gender'}</Form.Label>
+//   <Form.Control type="text" placeholder="gender " value={selectedInsurance['customerGender']}/>
+//   </Form.Group>
+//   <Form.Group className="mb-3" controlId="formBasicPremium">
+//   <Form.Label>{'Custom Income Group'}</Form.Label>
+//   <Form.Control type="text" placeholder="income " value={selectedInsurance['customerIncomeGroup']}/>
+//   </Form.Group>
+//   <Form.Group className="mb-3" controlId="formBasicPremium">
+//   <Form.Check type="checkbox" label={'Bodily Injury Liability'}/>
+//   </Form.Group>
+//   <Form.Group className="mb-3" controlId="formBasicPremium">
+//   <Form.Check type="checkbox" label={'Personal Injury Protection'}/>
+//   </Form.Group>
+//   <Form.Group className="mb-3" controlId="formBasicPremium">
+//   <Form.Check type="checkbox" label={'Property Damage Liability'}/>
+//   </Form.Group>
+//   <Form.Group className="mb-3" controlId="formBasicPremium">
+//   <Form.Check type="checkbox" label={'Collision'}/>
+//   </Form.Group>
+//   <Form.Group className="mb-3" controlId="formBasicPremium">
+//   <Form.Check type="checkbox" label={'Comprehensive'}/>
+//   </Form.Group>
+// </Form>
+//           </Modal.Body>
+//           <Modal.Footer>
+//             <Button variant="primary">
+//             Save changes
+//             </Button>
+//             <Button variant="secondary" onClick={()=> setModal(false)}>
+//             Close
+//             </Button>
+//           </Modal.Footer>
+//         </Modal.Dialog>
+//         </div>
+    }
     const onSearch = (e:any) => {
-        // setSearch(value);
-        const text = parseInt(e.target.value);
+      const text = parseInt(e.target.value);
         
         const arrayHolder = originalInsuranceList;
         if(e.target.value.length > 0){
@@ -22,24 +142,6 @@ export const Insurance = () => {
         }else{
             setInsuranceList(arrayHolder);
         }
-        // const newData = arrayHolder.filter((x:any) => {
-        //     if(x.policyId){
-        //         return x.policyId === text
-        //     }
-        //     return false
-        // });
-        // console.log('new data---------', newData, typeof text);
-        // const newData = arrayHolder.filter((item: any) => {
-        //   if (item.policyId) {
-        //     console.log('item------', item.policyId);
-        //     // const itemData = `${item.policyId}`;
-        //     // const textData = text;
-        //     const itemData = `${item.policyId?.toString()}`;
-        //     const textData = text.toString();
-        //     return itemData.indexOf(textData) > -1;
-        //   }
-        //   return false;
-        // });
     }
     const searchView = () => {
         return <div style={{float: "right", padding: 10}}><input type="text" placeholder = {'Search Insurance'} onChange={(text) => onSearch(text)}/></div>
@@ -67,7 +169,6 @@ export const Insurance = () => {
                 </tr>
             </thead>
             <tbody>
-                {/* {insuranceList.length > 0  && insuranceList.map((item)=> console.log(item))} */}
                 {insuranceList.length > 0  && insuranceList.map((item:any, key: Number)=>{ return <tr key ={'row' + key}>
                     <td key={'policyId'+ key}>{item.policyId}</td>
                     <td key={'customerId'+ key}>{item.customerId}</td>
@@ -75,7 +176,7 @@ export const Insurance = () => {
                     <td key={'premium'+ key}>{item.premium}</td>
                     <td key={'customerGender'+ key}>{item.customerGender}</td>
                     <td key={'customerRegion'+ key}>{item.customerRegion}</td>
-                    <td key={'edit'+ key}><button>Edit</button></td>
+                    <td key={'edit'+ key}><button onClick={()=>editInsurance(item)}>Edit</button></td>
                 </tr>})}
                 
             </tbody>
@@ -97,16 +198,12 @@ export const Insurance = () => {
             requestOptions,
           )
             const responseJson = await response.json();
+            console.log('neha---', responseJson.data);
             setInsuranceList(responseJson.data);
             setOriginalInsuranceList(responseJson.data);
-          console.log(responseJson);
-        //   const response = await fetch(
-        //     END_POINTS,
-        //     requestOptions,
-        //   ).then((a)=>{setInsuranceList(a);console.log('response is', a.json());}); 
         }
         fetchData();
         
       }, []);
-    return <div>{searchView()}{tableView()}</div>
+    return <div><div>{model=== true && dialogComponent()}</div>{searchView()}{tableView()}</div>
 }
