@@ -3,13 +3,14 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 const END_POINTS = 'http://localhost:8080/insurance';
-// const END_POINTS = 'http://localhost:8080/insurance/getInsuranceList';
 
 export const Insurance = () => {
     const [insuranceList, setInsuranceList] = React.useState([]);
     const [model, setModal] = React.useState(false);
     const [originalInsuranceList, setOriginalInsuranceList] = React.useState([]);
     const [selectedInsurance, setSelectedInsurance]= React.useState<any>([]);
+    const [error,setError] = React.useState<string>(' ');
+    const [allow, setAllow]= React.useState<boolean>(false);
     const editInsurance = (id: any) => {
         setModal(true);
         setSelectedInsurance(id);
@@ -20,7 +21,6 @@ export const Insurance = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-        //   Authorization: '' + token,
         },
         body: JSON.stringify(data),
       };
@@ -38,7 +38,8 @@ export const Insurance = () => {
       return <div style={{paddingLeft: '30%', paddingRight: '30%', backgroundColor:'grey'}}><div style={{width: '450px', height: '400px', position: 'fixed', zIndex: 10, overflowY: 'scroll'}}><Modal.Dialog>
       <Modal.Header>
           <Modal.Title>
-          Edit Insurance Policy Details
+          {/* Edit Insurance Details */}
+          <h6 style={{color: 'red', alignItems: 'center'}}>Error : {error}</h6>
           </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -54,7 +55,6 @@ export const Insurance = () => {
           </Form.Group>
           <Form.Group className="mb-1">
           <Form.Label><b>Form Label:</b> {selectedInsurance['dateOfPurchase']}</Form.Label>&nbsp;&nbsp;
-          {/* <Form.Control type="text" placeholder="PolicyId " value={selectedInsurance['policyId']}/> */}
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPremium">
         <Form.Label>{'Custom Gender'}</Form.Label>
@@ -89,14 +89,21 @@ export const Insurance = () => {
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPremium">
         <Form.Label>{'Premium'}</Form.Label>
-        <Form.Control type="text" placeholder="premium" onChange={(e)=>selectedInsurance['premium'] = parseInt(e.target.value)} defaultValue={selectedInsurance['premium']}/>
+        <Form.Control type="text" placeholder="premium" onChange={(e)=>{
+          if(parseInt(e.target.value) <= 1000000){
+            selectedInsurance['premium'] = parseInt(e.target.value)
+            setAllow(true);
+        }else{
+          setError('Premium Must Be less than 1 M')
+          setAllow(false);
+        }}} defaultValue={selectedInsurance['premium']}/>
         </Form.Group>
       </Form>
       </Modal.Body>
       <Modal.Footer>
-          <Button variant="primary" onClick={()=> saveInsurance(selectedInsurance)}>
+          {allow && <Button variant="primary" onClick={()=> saveInsurance(selectedInsurance)}>
           Save changes
-          </Button>
+          </Button>}
           <Button variant="secondary" onClick={()=> setModal(false)}>
           Close
           </Button>
@@ -134,18 +141,10 @@ export const Insurance = () => {
                 <tr key={'header'}>
                     <th key= {'policyId'}>Policy Id</th>
                     <th key= {'customerId'}>Customer Id</th>
-                    {/* <th>Fuel Id</th> */}
                     <th key= {'dop'}>Date Of Purchase</th>
                     <th key= {'premium'}>Premium</th>
-                    {/* <th>Bodily Injury Liability</th> */}
-                    {/* <th>Personal Injury Protection</th> */}
-                    {/* <th>Property Damage Liability</th> */}
-                    {/* <th>Collision</th> */}
-                    {/* <th>Comprehensive</th> */}
                     <th key={'gender'}>Customer Gender</th>
-                    {/* <th>Customer Income Group</th> */}
                     <th key={'region'}>Customer Region</th>
-                    {/* <th>Customer Marital Status</th> */}
                     <th key= {'edit'}>Edit</th>
                 </tr>
             </thead>
@@ -169,9 +168,7 @@ export const Insurance = () => {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
-            //   Authorization: '' + token,
             },
-            // body: JSON.stringify({id: 1}),
           };
         async function fetchData() {
             const response = await fetch(

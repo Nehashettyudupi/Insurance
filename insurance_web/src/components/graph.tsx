@@ -85,7 +85,6 @@ export const Graph = () => {
             requestOptions,
           )
             let responseJson = await response.json();
-            console.log('neha---', responseJson.data);
             let dataArray:any = [];
             for(let i of monthLabels){
               console.log(i);
@@ -95,7 +94,6 @@ export const Graph = () => {
                 }else{
                   dataArray.push(0);
                 }
-                console.log(item);
               })
             }
             setFinal(dataArray);
@@ -110,13 +108,12 @@ export const Graph = () => {
                 },
               ],
             });
-            console.log(data);
         }
         fetchData();
       }, [region]);
     return <div>
-      {/* <div><input type="text" placeholder = {'Search Insurance'} onChange={(text) => onSearch(text)}/> */}
       <div >
+        <label>Select Region : </label>&nbsp;&nbsp;
         <select name="cars" id="cars" onChange={(text) => onSearch(text)}>
           <option value="North">North</option>
           <option value="South">South</option>
