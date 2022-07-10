@@ -68,7 +68,6 @@ export const Graph = () => {
     const [final, setFinal] = React.useState([]);
 
     const onSearch = (event: any) => {
-      console.log(event.target.value);
       setRegion(event.target.value);
     }
     useEffect(() => {
@@ -87,7 +86,6 @@ export const Graph = () => {
             let responseJson = await response.json();
             let dataArray:any = [];
             for(let i of monthLabels){
-              console.log(i);
               responseJson.data.forEach((item: any) =>{
                 if(item.month === i){
                   dataArray.push(item.count);

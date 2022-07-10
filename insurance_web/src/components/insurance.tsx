@@ -16,7 +16,6 @@ export const Insurance = () => {
         setSelectedInsurance(id);
     }
     const saveInsurance = (data: any) => {
-      console.log('saved', data);
       const requestOptions = {
         method: 'POST',
         headers: {
@@ -30,7 +29,6 @@ export const Insurance = () => {
         requestOptions,
       )
         const responseJson = await response.json();
-        console.log('saved Successfully', responseJson)
     }
     saveData();
     }
@@ -38,7 +36,6 @@ export const Insurance = () => {
       return <div style={{paddingLeft: '30%', paddingRight: '30%', backgroundColor:'grey'}}><div style={{width: '450px', height: '400px', position: 'fixed', zIndex: 10, overflowY: 'scroll'}}><Modal.Dialog>
       <Modal.Header>
           <Modal.Title>
-          {/* Edit Insurance Details */}
           <h6 style={{color: 'red', alignItems: 'center'}}>Error : {error}</h6>
           </Modal.Title>
       </Modal.Header>
@@ -119,7 +116,6 @@ export const Insurance = () => {
         if(e.target.value.length > 0){
             const newData = arrayHolder.filter((x:any) => {
                 if(x.policyId){
-                    console.log('neha', x.policyId, text);
                     const mainpolicyId= x.policyId.toString();
                     const mainCustomerId= x.customerId.toString();
                     return mainpolicyId.indexOf(text.toString()) > -1 || mainCustomerId.indexOf(text.toString()) > -1 ;
@@ -176,7 +172,6 @@ export const Insurance = () => {
             requestOptions,
           )
             const responseJson = await response.json();
-            console.log('neha---', responseJson.data);
             setInsuranceList(responseJson.data);
             setOriginalInsuranceList(responseJson.data);
         }
