@@ -7,12 +7,15 @@ const vehicle_segment = require('./model/vehicle_segment');
 const app = express();
 const port = 8080;
 const sequelize = require('./database');
+const insuranceApi = require('./routes/insuranceApi');
+const bodyParser = require('body-parser');
 // const { Sequelize } = require('sequelize');
 // const sequelize = new Sequelize('insurance', 'test', 'test', {
 //   host: 'localhost',
 //   dialect:  'mysql',
 // });
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 async function authenticate(){
   try {
     await sequelize.authenticate();
@@ -27,7 +30,7 @@ authenticate();
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
-
+app.use('/insurance', insuranceApi);
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });

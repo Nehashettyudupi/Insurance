@@ -3,7 +3,7 @@ const sequelize = require('../database');
 const customer = sequelize.define(
   'customer',
   {
-    id: {
+    customerId: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
@@ -38,5 +38,7 @@ const customer = sequelize.define(
     }
   },
 );
-
+// customer.associate = (models) => {
+//   customer.hasMany(models.insurance);
+// };
 module.exports = customer;

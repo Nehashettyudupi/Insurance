@@ -2,9 +2,16 @@ const express = require('express');
 const router = express.Router();
 const Sequelize = require('sequelize');
 const { QueryTypes } = require('sequelize');
-router.get('/getInsuranceList', async function getInsuranceProduct(req,res){
-    try{return res.send(JSON.stringify('Qwert'))}catch(error){
-        return res.send(403);
+const customer = require('../model/customer');
+router.post('/getInsuranceList', async function getInsuranceProduct(req,res){
+    console.log('req.body.id', req.body.id);
+    try{
+        let query = await customer.findAll();
+        console.log(query);
+        return res.send(JSON.stringify('Qwert'))}
+    catch(error){
+        console.log(error);
+        return res.sendStatus(403);
     }
 });
 

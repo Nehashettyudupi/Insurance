@@ -3,7 +3,7 @@ const sequelize = require('../database');
 const fuel = sequelize.define(
   'fuel',
   {
-    id: {
+    fuelId: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
@@ -15,5 +15,7 @@ const fuel = sequelize.define(
     },
   },
 );
-
+// fuel.associate = (models) => {
+//   fuel.hasMany(models.insurance);
+// };
 module.exports = fuel;

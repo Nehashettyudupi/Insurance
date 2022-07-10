@@ -3,6 +3,14 @@ const sequelize = require('../database');
 const insurance = sequelize.define(
   'insurance',
   {
+    customerId:{
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    fuelId:{
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     policyId: {
       allowNull: false,
       autoIncrement: true,
@@ -41,33 +49,23 @@ const insurance = sequelize.define(
         type: DataTypes.STRING(32),
         allowNull: false,
     },
-  },
-  { 
+  }, {
     sequelize,
-    tableName: 'customers',
-    timestamps: false,
+    tableName: 'insurance',
+    // timestamps: false,
     indexes: [
       {
         name: 'PRIMARY',
         unique: true,
         using: 'BTREE',
-        fields: [{ name: 'customerId' }],
-      },
-    ],
-  },
-  { 
-    sequelize,
-    tableName: 'fuel',
-    timestamps: false,
-    indexes: [
-      {
-        name: 'PRIMARY',
-        unique: true,
-        using: 'BTREE',
-        fields: [{ name: 'fuelId' }],
+        fields: [{ name: 'customerId' }, { name: 'fuelId' },{ name: 'vehicleId' }],
       },
     ],
   }
 );
-
+// insurance.associate = (models) => {
+//   insurance.belongsTo(models.fuel);
+//   insurance.belongsTo(models.customer);
+//   insurance.belongsTo(models.vehicle_segment);
+// };
 module.exports = insurance;
