@@ -22,11 +22,17 @@ const customer = sequelize.define(
         allowNull: false,
     },
     customerRegion: {
-        type: DataTypes.STRING(32),
+        type: DataTypes.ENUM,
+        values: [
+          'North',
+          'South' ,
+          'East',
+          'West' 
+        ],
         allowNull: false,
     },
     customerMaritalStatus: {
-        type: DataTypes.STRING(32),
+        type: DataTypes.BOOLEAN,
         allowNull: false,
 
     }
