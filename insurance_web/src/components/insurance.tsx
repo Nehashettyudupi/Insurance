@@ -2,7 +2,8 @@ import React ,{useEffect} from "react";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-const END_POINTS = 'http://localhost:8080/insurance/getInsuranceList'
+const END_POINTS = 'http://localhost:8080/insurance';
+// const END_POINTS = 'http://localhost:8080/insurance/getInsuranceList';
 
 export const Insurance = () => {
     const [insuranceList, setInsuranceList] = React.useState([]);
@@ -14,7 +15,24 @@ export const Insurance = () => {
         setSelectedInsurance(id);
     }
     const saveInsurance = (data: any) => {
-      console.log(data);
+      console.log('saved', data);
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        //   Authorization: '' + token,
+        },
+        body: JSON.stringify(data),
+      };
+      async function saveData() {
+        const response = await fetch(
+        END_POINTS + '/saveInsuranceDetails',
+        requestOptions,
+      )
+        const responseJson = await response.json();
+        console.log('saved Successfully', responseJson)
+    }
+    saveData();
     }
     const dialogComponent = () => {
       return <div style={{paddingLeft: '30%', paddingRight: '30%', backgroundColor:'grey'}}><div style={{width: '450px', height: '400px', position: 'fixed', zIndex: 10, overflowY: 'scroll'}}><Modal.Dialog>
@@ -146,18 +164,18 @@ export const Insurance = () => {
         </table>
     </div>
     }
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        //   Authorization: '' + token,
-        },
-        body: JSON.stringify({id: 1}),
-      };
     useEffect(() => {
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            //   Authorization: '' + token,
+            },
+            // body: JSON.stringify({id: 1}),
+          };
         async function fetchData() {
             const response = await fetch(
-            END_POINTS,
+            END_POINTS + '/getInsuranceList',
             requestOptions,
           )
             const responseJson = await response.json();
