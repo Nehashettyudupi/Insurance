@@ -11,6 +11,10 @@ const insurance = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    vehicleId:{
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
     policyId: {
       allowNull: false,
       autoIncrement: true,

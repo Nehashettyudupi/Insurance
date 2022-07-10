@@ -2,6 +2,7 @@
 INSERT INTO `insurance`.`insurance`
 (`customerId`,
 `fuelId`,
+`vehicleId`,
 `policyId`,
 `dateOfPurchase`,
 `premium`,
@@ -14,6 +15,7 @@ INSERT INTO `insurance`.`insurance`
 `updatedAt`)
 VALUES
 (400,
+1,
 1,
 12345,
 '2018-01-16 11:10:49',
@@ -30,6 +32,7 @@ SELECT * FROM insurance.insurance;
 INSERT INTO `insurance`.`insurance`
 (`customerId`,
 `fuelId`,
+`vehicleId`,
 `policyId`,
 `dateOfPurchase`,
 `premium`,
@@ -42,6 +45,7 @@ INSERT INTO `insurance`.`insurance`
 `updatedAt`)
 VALUES
 (401,
+1,
 1,
 12346,
 '2018-04-04 11:10:49',
@@ -58,6 +62,7 @@ SELECT * FROM insurance.insurance;
 INSERT INTO `insurance`.`insurance`
 (`customerId`,
 `fuelId`,
+`vehicleId`,
 `policyId`,
 `dateOfPurchase`,
 `premium`,
@@ -70,6 +75,7 @@ INSERT INTO `insurance`.`insurance`
 `updatedAt`)
 VALUES
 (402,
+1,
 1,
 12356,
 '2018-01-19 11:10:49',
